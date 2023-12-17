@@ -4,13 +4,14 @@ import { Context } from "../contexts/CourseContext";
 
 const Home = () => {
   const { state } = useContext(Context);
+
   return (
-    <div className="xs:px-6 480px:px-16 px-4 py-6">
+    <div className="px-4 py-6 xs:px-6 480px:px-16">
       <div className="grid w-full grid-cols-12 gap-y-14 sm:gap-x-12 ">
         {state.map((i) => (
           <div
             key={i.id}
-            className=" 3xl:col-span-2 col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3"
+            className=" col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 3xl:col-span-2"
           >
             <Card value={i} />
           </div>

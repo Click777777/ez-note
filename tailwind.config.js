@@ -1,5 +1,5 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+// tailwind.config.js
+module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -18,13 +18,6 @@ export default {
         xs: "360px",
         "480px": "480px",
         "3xl": "1920px",
-      },
-      container: {
-        screens: {
-          xxs: "100%", // Override for xxs screen size
-          xs: "100%", // Override for xs screen size
-          "3xl": "100%", // Override for 3xl screen size
-        },
       },
     },
   },

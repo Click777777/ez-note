@@ -4,13 +4,10 @@ import Nav from "./components/Nav";
 import Home from "./components/Home";
 import Error404 from "./components/Error404";
 import Admin from "./components/Admin";
-import Update from "./components/Update";
-import Post from "./components/Post";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import { Context } from "./contexts/CourseContext";
-import Overlay from "./components/subComponent/Overlay";
-import Example from "./components/subComponent/Example";
+import CourseDetail from "./components/CourseDetail";
 
 const App = () => {
   const { state1 } = useContext(Context);
@@ -27,10 +24,8 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/post" element={<Post />} />
-        <Route path="/update" element={<Update />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/overlay" element={<Example />} />
+        {/* <Route path="/login" element={<CourseDetail />} /> */}
 
         <Route path="*" element={<Error404 />} />
       </Routes>

@@ -1,109 +1,196 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { GoX } from "react-icons/go";
 import { Context } from "../../contexts/CourseContext";
+import { updateCourse } from "../../api/RestApi";
 
-const Overlay = () => {
-  const { dispatch1 } = useContext(Context);
-  const [getEmail, setGetEmail] = useState("coursebye2n@gmail.com");
-  const [getPassword, setGetPassword] = useState("admin@123");
-  const [loginData, setloginData] = useState({
-    email: "",
-    password: "",
+const Overlay = ({ value, setClicked, clicked }) => {
+  const { dispatch } = useContext(Context);
+  const [updateData, setUpdateData] = useState({
+    id: value.id,
+    title: value.title,
+    description: value.description,
   });
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchLoginData();
-  }, []);
-
-  const fetchLoginData = async () => {
-    const res = await axios.get("http://localhost:4000/login");
-    res.data.map((i) => setloginData(i));
+  const closeUpdateBtn = () => {
+    setClicked(!clicked);
   };
 
-  const submitForm = (e) => {
+  const dbUpdate = async () => {
+    await updateCourse(updateData.id, updateData);
+  };
+
+  const handleEdit = (e) => {
     e.preventDefault();
-    if (getEmail === loginData.email && getPassword === loginData.password) {
-      navigate("/admin");
-      dispatch1({ type: "loggedIn", payload: true });
-    } else {
-      dispatch1({ type: "notLoggedIn", payload: false });
-    }
+    dispatch({ type: "Update", payload: updateData });
+    dbUpdate();
+    setClicked(!clicked);
   };
 
   return (
-    <div className="xs:px-6 480px:px-16 flex items-center justify-center px-4 py-6">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold capitalize leading-9 tracking-tight  ">
-            update your course
-          </h2>
+    <div
+      className={`${
+        clicked ? "block" : "hidden"
+      } fixed right-0 top-0 z-20 h-screen w-screen `}
+    >
+      <div className=" h-full overflow-auto border border-green bg-dark pb-12">
+        <div className="flex justify-end">
+          <button className=" p-4 pb-0 text-[3rem] " onClick={closeUpdateBtn}>
+            <GoX className="transition-all duration-200 hover:text-green" />
+          </button>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={submitForm} method="POST">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium capitalize leading-6 "
-              >
-                title
-              </label>
-              <div className="mt-2">
-                <input
-                  value={getEmail}
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-dark  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={(e) => setGetEmail(e.target.value)}
-                />
-              </div>
-            </div>
+        <div className=" mx-auto max-w-lg p-8 pt-0">
+          <div className="">
+            <h2 className="mt-10 text-center text-2xl font-bold capitalize leading-9 tracking-tight  ">
+              update your course
+            </h2>
+          </div>
 
-            <div>
-              <div className="flex items-center justify-between">
+          <div className="mt-10 ">
+            <form
+              className="space-y-6"
+              encType="multipart/form-data"
+              onSubmit={handleEdit}
+            >
+              {/* title */}
+              <div>
                 <label
-                  htmlFor="description"
+                  htmlFor="title"
                   className="block text-sm font-medium capitalize leading-6 "
                 >
-                  description
+                  title
                 </label>
+                <div className="mt-2">
+                  <input
+                    defaultValue={value.title} // Use defaultValue if you want an uncontrolled component
+                    id="title"
+                    name="title"
+                    type="text"
+                    autoComplete="title"
+                    required
+                    placeholder="Type your title here..."
+                    className="block w-full rounded-md border-0 py-1.5 text-dark  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                    onChange={(e) =>
+                      setUpdateData({
+                        ...updateData,
+                        title: e.target.value,
+                      })
+                    }
+                  />
+                </div>
               </div>
-              <div className="mt-2">
-                <textarea
-                  name="description"
-                  id="description"
-                  cols="50"
-                  rows="4"
-                  className="block w-full rounded-md border-0 py-1.5 text-dark  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                ></textarea>
-                {/* <input
-                  value={getPassword}
-                  id="password"
-                  name="password"
-                  type="text"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-dark  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={(e) => setGetPassword(e.target.value)}
-                /> */}
-              </div>
-            </div>
 
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
+              {/* posterImg & video */}
+              {/* <div>
+                <label
+                  htmlFor="content"
+                  className="block text-sm font-medium capitalize leading-6 "
+                >
+                  content
+                </label>
+                <div className="mt-2 flex flex-wrap">
+                  <div className="flex-1">
+                    <label
+                      htmlFor="video"
+                      className="block text-xs font-normal capitalize leading-6 "
+                    >
+                      poster
+                    </label>
+                    <input
+                      type="file"
+                      name="video"
+                      id="video"
+                      required
+                      accept="image/*"
+                      className="max-w-[200px]"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                  </div>
+
+                  <div className="flex-1">
+                    <label
+                      htmlFor="video"
+                      className="block text-xs font-normal capitalize leading-6 "
+                    >
+                      video
+                    </label>
+                    <input
+                      type="file"
+                      name="video"
+                      id="video"
+                      required
+                      accept="video/*"
+                      className="max-w-[200px]"
+                      onChange={(e) => setGetVideo(e.target.files[0])}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-2 flex space-x-2">
+                  {file && (
+                    <div className="flex-1">
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt="image error"
+                        className=" w-[400px]"
+                      />
+                    </div>
+                  )}
+
+                  {getVideo && (
+                    <div className="flex-1">
+                      <video
+                        controls
+                        src={URL.createObjectURL(getVideo)}
+                        type={getVideo.type}
+                        preload="auto"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div> */}
+
+              {/* description */}
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium capitalize leading-6 "
+                  >
+                    description
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <textarea
+                    defaultValue={value.description} // Use defaultValue if you want an uncontrolled component
+                    required
+                    name="description"
+                    id="description"
+                    rows="4"
+                    cols="50"
+                    placeholder="Type your description here..."
+                    className="block w-full rounded-md border-0 py-1.5 text-dark shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6"
+                    onChange={(e) =>
+                      setUpdateData({
+                        ...updateData,
+                        description: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+
+              {/* update */}
+              <div>
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-green px-3 py-1.5 text-sm font-semibold capitalize leading-6 text-white shadow-sm ring-offset-4 hover:bg-green focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green"
+                >
+                  update
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

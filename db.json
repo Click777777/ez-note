@@ -2,34 +2,24 @@
   "posts": [
     {
       "id": 1,
-      "title": "html",
-      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi necessitatibus ad consectetur! Unde quis sequi enim saepe dolorum earum aspernatur aliquam explicabo velit? Sit possimus modi iusto sapiente magni dolorem!"
+      "title": "test1",
+      "description": "test1"
     },
     {
-      "id": 2,
-      "title": "css",
-      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi necessitatibus ad consectetur! Unde quis sequi enim saepe dolorum earum aspernatur aliquam explicabo velit? Sit possimus modi iusto sapiente magni dolorem!"
+      "title": "test2",
+      "description": "test2",
+      "id": 2
     },
     {
       "id": 3,
-      "title": "java-script",
-      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi necessitatibus ad consectetur! Unde quis sequi enim saepe dolorum earum aspernatur aliquam explicabo velit? Sit possimus modi iusto sapiente magni dolorem!"
-    },
-    {
-      "id": 4,
-      "title": "react-js",
-      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi necessitatibus ad consectetur! Unde quis sequi enim saepe dolorum earum aspernatur aliquam explicabo velit? Sit possimus modi iusto sapiente magni dolorem!"
-    },
-    {
-      "id": 5,
-      "title": "node-js",
-      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi necessitatibus ad consectetur! Unde quis sequi enim saepe dolorum earum aspernatur aliquam explicabo velit? Sit possimus modi iusto sapiente magni dolorem!"
-    },
-    {
-      "id": 6,
-      "title": "vue-js",
-      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi necessitatibus ad consectetur! Unde quis sequi enim saepe dolorum earum aspernatur aliquam explicabo velit? Sit possimus modi iusto sapiente magni dolorem!"
+      "title": "test3",
+      "description": "test3"
     }
   ],
-  "login": [{ "email": "coursebye2n@gmail.com", "password": "admin@123" }]
+  "login": [
+    {
+      "email": "coursebye2n@gmail.com",
+      "password": "admin@123"
+    }
+  ]
 }
